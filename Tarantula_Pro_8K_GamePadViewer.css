@@ -1,0 +1,269 @@
+
+/*
+  GameSir Tarantula Pro 8K — GamePad Viewer / OBS
+  1000x1000 canvas
+  Built around the standard GamePad Viewer Xbox DOM.
+
+  IMPORTANT:
+  Replace the asset URL below with your Imgur direct PNG URL.
+*/
+:root{
+  --asset-base: url("https://i.imgur.com/PFcfork.png");
+  --active: rgba(255,255,255,.92);
+  --active-soft: rgba(255,255,255,.28);
+  --active-shadow: 0 0 0 3px rgba(255,255,255,.80), 0 0 18px rgba(255,255,255,.60);
+}
+
+/* ---------- CONTROLLER CANVAS ---------- */
+.controller.custom{
+  position:absolute;
+  width:1000px;
+  height:1000px;
+  margin-left:-500px;
+  margin-top:-500px;
+  left:50%;
+  top:50%;
+  background:var(--asset-base) no-repeat 0 0;
+  background-size:1000px 1000px;
+  overflow:visible;
+}
+
+.custom.disconnected{
+  background-image:var(--asset-base);
+}
+.custom.disconnected > div{
+  display:none;
+}
+
+/* ---------- COMMON INPUT LAYERS ---------- */
+.custom .triggers,
+.custom .bumpers,
+.custom .arrows,
+.custom .abxy,
+.custom .sticks,
+.custom .dpad{
+  position:absolute;
+}
+
+/*
+  The physical controller is already drawn by the base image.
+  GamePad Viewer input elements are therefore used as transparent
+  interactive/animated state layers.
+*/
+
+/* ---------- BUMPERS ---------- */
+.custom .bumpers{
+  width:430px;
+  height:80px;
+  left:275px;
+  top:245px;
+  pointer-events:none;
+}
+
+.custom .bumper{
+  position:absolute;
+  top:0;
+  width:150px;
+  height:62px;
+  opacity:0;
+  border-radius:32px;
+  box-sizing:border-box;
+  transition:opacity .03s linear;
+}
+
+.custom .bumper.left{left:0;}
+.custom .bumper.right{right:0;}
+
+.custom .bumper.pressed{
+  opacity:1;
+  background:rgba(255,255,255,.10);
+  box-shadow:var(--active-shadow);
+}
+
+/* ---------- TRIGGERS ---------- */
+.custom .triggers{
+  width:430px;
+  height:150px;
+  left:250px;
+  top:155px;
+  pointer-events:none;
+}
+
+.custom .trigger{
+  position:absolute;
+  top:0;
+  width:140px;
+  height:135px;
+  opacity:0;
+  box-sizing:border-box;
+  border-radius:35px;
+}
+
+.custom .trigger.left{left:0;}
+.custom .trigger.right{right:0;}
+
+.custom .trigger.pressed{
+  opacity:.55;
+  background:linear-gradient(to bottom,rgba(255,255,255,.05),rgba(255,255,255,.28));
+  box-shadow:inset 0 0 0 3px rgba(255,255,255,.70),0 0 20px rgba(255,255,255,.35);
+}
+
+/* ---------- BACK / START ---------- */
+.custom .arrows{
+  width:150px;
+  height:55px;
+  left:420px;
+  top:300px;
+  pointer-events:none;
+}
+
+.custom .back,
+.custom .start{
+  position:absolute;
+  width:52px;
+  height:42px;
+  opacity:0;
+  border-radius:50%;
+  box-sizing:border-box;
+}
+
+.custom .back{left:0;}
+.custom .start{right:0;}
+
+.custom .back.pressed,
+.custom .start.pressed{
+  opacity:1;
+  background:rgba(255,255,255,.16);
+  box-shadow:0 0 0 3px rgba(255,255,255,.75),0 0 15px rgba(255,255,255,.55);
+}
+
+/* ---------- ABXY ---------- */
+.custom .abxy{
+  width:210px;
+  height:215px;
+  left:655px;
+  top:255px;
+  pointer-events:none;
+}
+
+.custom .button{
+  position:absolute;
+  width:66px;
+  height:66px;
+  opacity:0;
+  border-radius:50%;
+  box-sizing:border-box;
+}
+
+.custom .a{left:45px;top:90px;}
+.custom .b{left:95px;top:45px;}
+.custom .x{left:0;top:45px;}
+.custom .y{left:45px;top:0;}
+
+.custom .button.pressed{
+  opacity:1;
+  background:rgba(255,255,255,.13);
+  box-shadow:var(--active-shadow);
+}
+
+/* ---------- D-PAD ---------- */
+.custom .dpad{
+  width:150px;
+  height:150px;
+  left:190px;
+  top:255px;
+  pointer-events:none;
+}
+
+.custom .face{
+  position:absolute;
+  opacity:0;
+  box-sizing:border-box;
+  background:none !important;
+}
+
+.custom .face.up,
+.custom .face.down{
+  width:48px;
+  height:62px;
+  left:51px;
+}
+
+.custom .face.up{top:0;}
+.custom .face.down{bottom:0;}
+
+.custom .face.left,
+.custom .face.right{
+  width:62px;
+  height:48px;
+  top:51px;
+}
+
+.custom .face.left{left:0;}
+.custom .face.right{right:0;}
+
+.custom .face.pressed{
+  opacity:1;
+  background:rgba(255,255,255,.15) !important;
+  box-shadow:0 0 0 3px rgba(255,255,255,.72),0 0 14px rgba(255,255,255,.48);
+}
+
+/* ---------- ANALOG STICKS ---------- */
+/*
+  The physical sticks remain in the base artwork.
+  These transparent rings move with GamePad Viewer's analog values,
+  giving a clean movement indicator without duplicating the stick image.
+*/
+.custom .sticks{
+  width:390px;
+  height:115px;
+  left:322px;
+  top:354px;
+  pointer-events:none;
+}
+
+.custom .stick{
+  position:absolute;
+  width:112px;
+  height:112px;
+  opacity:.38;
+  border:3px solid rgba(255,255,255,.80);
+  border-radius:50%;
+  box-sizing:border-box;
+  background:rgba(255,255,255,.07);
+  box-shadow:0 0 15px rgba(255,255,255,.35);
+}
+
+.custom .stick.left{
+  left:0;
+  top:0;
+}
+
+.custom .stick.right{
+  right:0;
+  top:0;
+}
+
+.custom .stick.pressed{
+  opacity:1;
+}
+
+/* ---------- OPTIONAL DIGITAL TRIGGER BUTTONS ---------- */
+.custom .trigger-button{
+  opacity:0;
+}
+
+.custom .trigger-button.pressed{
+  opacity:1;
+}
+
+/* ---------- HIDE UNUSED FIGHT-STICK ELEMENTS ---------- */
+.custom .fstick{
+  display:none;
+}
+
+/* ---------- SCALE SAFETY ---------- */
+.custom,
+.custom *{
+  box-sizing:border-box;
+}
